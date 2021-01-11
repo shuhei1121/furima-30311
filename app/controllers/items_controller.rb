@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_item, only: [:edit, :show, :update, :access_limit]
-  before_action :access_limit, only:[:edit]
+  before_action :set_item, only: %i[edit show update access_limit]
+  before_action :access_limit, only: [:edit]
   def index
     @items = Item.includes(:user).order('created_at DESC')
   end
@@ -19,11 +19,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @item.update(item_params)
@@ -48,9 +46,6 @@ class ItemsController < ApplicationController
   def access_limit
     # if 売却されている場合
     # redirect_to root_path
-    if current_user.id != @item.user_id
-      redirect_to root_path
-    end
+    redirect_to root_path if current_user.id != @item.user_id
   end
-
 end
