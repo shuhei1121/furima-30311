@@ -52,8 +52,6 @@ class ItemsController < ApplicationController
   end
 
   def access_limit
-    if Purchase.exists?(item_id: @item.id) || current_user.id != @item.user_id
-      redirect_to root_path  
-    end
+    redirect_to root_path if Purchase.exists?(item_id: @item.id) || current_user.id != @item.user_id
   end
 end
