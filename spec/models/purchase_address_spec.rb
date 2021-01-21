@@ -13,6 +13,11 @@ RSpec.describe PurchaseAddress, type: :model do
       it '必須項目を全て入力すれば購入できる' do
         expect(@purchase_address).to be_valid
       end
+
+      it '建物名が空でも購入できる' do
+        @purchase_address.building_number = nil
+        expect(@purchase_address).to be_valid
+      end
     end
 
     context '商品の購入ができない場合' do
