@@ -1,12 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe PurchaseAddress, type: :model do
-  before do
-    @purchase_address = FactoryBot.build(:purchase_address)
-    @user = FactoryBot.build(:user)
-    @item = FactoryBot.build(:item)
-  end
   describe '商品の購入' do
+    before do
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.create(:item)
+      @purchase_address = FactoryBot.build(:purchase_address, user_id: @user.id, item_id: @item.id)
+      sleep(0.1)
+    end
+
     context '商品の購入ができる場合' do
       it '必須項目を全て入力すれば購入できる' do
         expect(@purchase_address).to be_valid
